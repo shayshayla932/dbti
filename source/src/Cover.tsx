@@ -48,8 +48,8 @@ const STICKERS: StickerDef[] = [
     m: [4, 53.1, 40, -4], d: [19, 73, 12, -4], doodle: { kind: "underline", x: 18, y: 96, s: 87, tone: "red" } },
   { id: "vibe", src: stVibe, ratio: 1.608, name: { zh: "被 AI 吓醒", en: "Startled by AI" },
     m: [64, 51.3, 28, 6], d: [37, 72, 8.5, 5], doodle: { kind: "star", x: -34, y: 10, s: 44 } },
-  { id: "copy", src: stCopy, ratio: 1.4128, name: { zh: "参考搬运", en: "Reference haul" },
-    m: [10, 69.3, 28, 6], d: [55, 70, 9.5, 6], doodle: { kind: "heart", x: 78, y: -6, s: 38, tone: "red" } },
+  { id: "copy", src: stCopy, ratio: 1.4612, name: { zh: "参考搬运", en: "Reference haul" },
+    m: [10, 69.3, 28, 6], d: [55, 70, 9.5, 6], doodle: { kind: "heart", x: -14, y: 2, s: 38, tone: "red" } },
   { id: "ship", src: stShip, ratio: 1.0191, name: { zh: "先上线再说", en: "Shipping it" },
     m: [50, 70.2, 44, -6], d: [67, 74, 13, -5], doodle: { kind: "squiggle", x: -30, y: 70, s: 49 } },
 ];
