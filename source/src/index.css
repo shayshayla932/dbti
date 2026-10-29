@@ -1,0 +1,200 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Layout: a native iOS app. Grouped background, inset rounded cells, large
+   left-aligned titles, one handwritten note per screen as the only flourish. */
+:root {
+  --canvas: #F2F2F7;          /* systemGroupedBackground */
+  --background: #FFFFFF;      /* secondarySystemGroupedBackground (cells) */
+  --foreground: #000000;      /* label */
+  --card: #EFEFF4;            /* tertiary fill */
+  --muted-foreground: rgb(60 60 67 / 0.6); /* secondaryLabel */
+  --border: rgb(60 60 67 / 0.18);          /* separator */
+  --border-strong: rgb(60 60 67 / 0.29);
+  --primary: #007AFF;         /* systemBlue */
+  --primary-foreground: #FFFFFF;
+  --danger: #FF3B30;
+  --redline: #FF2D55;
+  --green: #34C759;
+  --scribble-ink: #1C1C1E;
+  --scribble-mark: #E9FF4F;
+  --fam-pixel: #4C6E9E;   /* slate blue: PIXL / AUTO / BLCK */
+  --fam-client: #C0533A;  /* terracotta: LOGO / UNDO / MEGO */
+  --fam-ship: #B0466C;    /* berry: SHIP / GHST / LORM */
+  --fam-chaos: #8A6648;   /* umber: FNAL / COPY / VIBE */
+  --font-ui: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Inter", "PingFang SC", "Hiragino Sans GB", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  --font-hand: "Caveat", "Long Cang", "Kaiti SC", cursive;
+  --font-code: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --canvas: #000000;
+    --background: #1C1C1E;
+    --foreground: #FFFFFF;
+    --card: #2C2C2E;
+    --muted-foreground: rgb(235 235 245 / 0.6);
+    --border: rgb(84 84 88 / 0.55);
+    --border-strong: rgb(84 84 88 / 0.8);
+    --primary: #0A84FF;
+    --primary-foreground: #FFFFFF;
+    --danger: #FF453A;
+    --redline: #FF375F;
+    --green: #30D158;
+    --scribble-ink: #E9FF4F;
+    --scribble-mark: transparent;
+    --fam-pixel: #8FB0DD;
+    --fam-client: #EC8B70;
+    --fam-ship: #E886AA;
+    --fam-chaos: #C9A584;
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme="dark"] {
+  --canvas: #000000;
+  --background: #1C1C1E;
+  --foreground: #FFFFFF;
+  --card: #2C2C2E;
+  --muted-foreground: rgb(235 235 245 / 0.6);
+  --border: rgb(84 84 88 / 0.55);
+  --border-strong: rgb(84 84 88 / 0.8);
+  --primary: #0A84FF;
+  --primary-foreground: #FFFFFF;
+  --danger: #FF453A;
+  --redline: #FF375F;
+  --green: #30D158;
+  --scribble-ink: #E9FF4F;
+  --scribble-mark: transparent;
+  --fam-pixel: #8FB0DD;
+  --fam-client: #EC8B70;
+  --fam-ship: #E886AA;
+  --fam-chaos: #C9A584;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--foreground);
+  --color-popover: var(--background);
+  --color-popover-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--card);
+  --color-secondary-foreground: var(--foreground);
+  --color-muted: var(--card);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--primary);
+  --color-accent-foreground: var(--primary-foreground);
+  --color-destructive: var(--danger);
+  --color-input: var(--border);
+  --color-ring: var(--border-strong);
+  --color-canvas: var(--canvas);
+  --color-redline: var(--redline);
+  --color-ios-green: var(--green);
+  --color-fam-pixel: var(--fam-pixel);
+  --color-fam-client: var(--fam-client);
+  --color-fam-ship: var(--fam-ship);
+  --color-fam-chaos: var(--fam-chaos);
+  --font-sans: var(--font-ui);
+  --font-mono: var(--font-code);
+  --font-display: var(--font-ui);
+  --font-hand: var(--font-hand);
+}
+
+html, body { min-height: 100%; }
+body {
+  background: var(--canvas);
+  color: var(--foreground);
+  font-family: var(--font-ui);
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px);
+  z-index: 40;
+  background: var(--canvas);
+}
+
+.gutter {
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+
+/* iOS inset grouped cell */
+.cell {
+  background: var(--background);
+  border-radius: 12px;
+}
+.section-header {
+  font-size: 13px;
+  letter-spacing: 0;
+  color: var(--muted-foreground);
+  padding: 0 16px 7px;
+  text-transform: uppercase;
+}
+.section-footer {
+  font-size: 13px;
+  letter-spacing: 0;
+  color: var(--muted-foreground);
+  padding: 7px 16px 0;
+  line-height: 1.38;
+}
+.row + .row { box-shadow: inset 0 0.5px 0 var(--border); }
+.row-inset + .row-inset { position: relative; }
+.row-inset + .row-inset::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: var(--sep-inset, 16px);
+  border-top: 0.5px solid var(--border);
+}
+
+/* Toolcraft-style handwritten note */
+.scribble {
+  font-family: var(--font-hand);
+  color: var(--scribble-ink);
+  background: linear-gradient(transparent 55%, var(--scribble-mark) 55%, var(--scribble-mark) 92%, transparent 92%);
+  letter-spacing: 0;
+}
+
+.dot-canvas { background-color: #E5E5E5; }
+.dark .dot-canvas { background-color: #1E1E1E; }
+
+h1, h2, h3 { text-wrap: balance; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Cover: the original Figma-canvas look */
+.cover-canvas {
+  background-color: var(--canvas);
+  background-image: radial-gradient(var(--cover-dot) 1px, transparent 1.2px);
+  background-size: 16px 16px;
+}
+:root { --cover-dot: rgb(20 20 30 / 0.09); --font-cover: "Unbounded", "Inter", -apple-system, sans-serif; --shadow-artboard: 0 1px 2px rgb(0 0 0 / 0.06), 0 12px 32px -12px rgb(20 20 40 / 0.18); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --cover-dot: rgb(255 255 255 / 0.07); --shadow-artboard: 0 1px 2px rgb(0 0 0 / 0.4), 0 16px 40px -16px rgb(0 0 0 / 0.7); } }
+:root[data-theme="dark"] { --cover-dot: rgb(255 255 255 / 0.07); --shadow-artboard: 0 1px 2px rgb(0 0 0 / 0.4), 0 16px 40px -16px rgb(0 0 0 / 0.7); }
+.font-cover { font-family: var(--font-cover); }
+.frame-label { font-family: var(--font-code); font-size: 11px; letter-spacing: 0.02em; color: var(--muted-foreground); }
+.artboard { background: var(--background); box-shadow: var(--shadow-artboard); border-radius: 14px; }
+.handle { position: absolute; width: 8px; height: 8px; background: var(--background); border: 1.5px solid var(--primary); border-radius: 1px; }
+
+/* Cover stickers: phone positions by default, desktop positions from sm up */
+.sticker { left: var(--mx); top: var(--my); width: var(--mw); rotate: var(--mr); }
+@media (min-width: 1024px) { .sticker { left: var(--dx); top: var(--dy); width: var(--dw); rotate: var(--dr); } }
+.sticker-img { filter: drop-shadow(0 6px 10px rgb(20 20 40 / 0.16)) drop-shadow(0 1px 1px rgb(20 20 40 / 0.12)); }
+.dark .sticker-img { filter: drop-shadow(0 8px 14px rgb(0 0 0 / 0.55)); }
